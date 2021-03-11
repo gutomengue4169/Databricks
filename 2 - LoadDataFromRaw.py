@@ -68,9 +68,3 @@ if dfReadSpecificStructure.count() >0:
   dfReadSpecificStructure.write.mode("append").saveAsTable("registroenderecoescola")
 else:
   print ("No new records to insert")
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC select *
-# MAGIC from registroenderecoescola
