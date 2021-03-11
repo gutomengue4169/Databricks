@@ -52,9 +52,12 @@ dfReadSpecificStructure.createOrReplaceTempView("RecordSourceData")
 # COMMAND ----------
 
 #join the view and new table and only insert new records
-dfReadSpecificStructure = sqlContext.sql("select RecordSourceData.* from RecordSourceData left join registroenderecoescola on RecordSourceData._id = registroenderecoescola._id and RecordSourceData.nome = registroenderecoescola.nome and RecordSourceData.LoadDate = registroenderecoescola.LoadDate where registroenderecoescola._id is null")
+dfReadSpecificStructure = sqlContext.sql("select RecordSourceData.* from RecordSourceData left join registroenderecoescola on RecordSourceData._id = registroenderecoescola._id and RecordSourceData.nome = registroenderecoescola.nome and RecordSourceData.DateExtraction = registroenderecoescola.DateExtraction where registroenderecoescola._id is null")
 
 # COMMAND ----------
 
 #insert new records if any
-dfReadSpecificStructure.write.mode("append").saveAsTable("registroenderecoescola")
+if dfReadSpecificStructure.count() >0:
+  dfReadSpecificStructure.write.mode("append").saveAsTable("registroenderecoescola")
+else:
+  print ("No new records to insert")
