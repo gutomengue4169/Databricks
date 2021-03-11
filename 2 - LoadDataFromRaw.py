@@ -58,8 +58,3 @@ dfReadSpecificStructure = sqlContext.sql("select RecordSourceData.* from RecordS
 
 #insert new records if any
 dfReadSpecificStructure.write.mode("append").saveAsTable("registroenderecoescola")
-
-# COMMAND ----------
-
-# MAGIC %sql 
-# MAGIC select 1
