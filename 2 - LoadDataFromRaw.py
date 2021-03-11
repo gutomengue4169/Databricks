@@ -23,6 +23,7 @@ except:
 file_type = "json"
 folder_source_name = (max(dbutils.fs.ls("/mnt/datalakesourcedata/registro_escolas"))).name
 file_location = "dbfs:/mnt/datalakesourcedata/registro_escolas/" + folder_source_name
+folder_source_name = folder_source_name.replace("/","").replace("_", ' ').replace('dados','').replace('.',':').strip()
 
 # COMMAND ----------
 
@@ -52,7 +53,13 @@ dfReadSpecificStructure.createOrReplaceTempView("RecordSourceData")
 # COMMAND ----------
 
 #join the view and new table and only insert new records
-dfReadSpecificStructure = sqlContext.sql("select RecordSourceData.* from RecordSourceData left join registroenderecoescola on RecordSourceData._id = registroenderecoescola._id and RecordSourceData.nome = registroenderecoescola.nome and RecordSourceData.DateExtraction = registroenderecoescola.DateExtraction where registroenderecoescola._id is null")
+dfReadSpecificStructure = sqlContext.sql('''
+      select RecordSourceData.* 
+      from RecordSourceData left join registroenderecoescola 
+          on RecordSourceData._id = registroenderecoescola._id 
+          and RecordSourceData.nome = registroenderecoescola.nome 
+          and RecordSourceData.DateExtraction = registroenderecoescola.DateExtraction 
+          where registroenderecoescola._id is null''')
 
 # COMMAND ----------
 
@@ -61,3 +68,9 @@ if dfReadSpecificStructure.count() >0:
   dfReadSpecificStructure.write.mode("append").saveAsTable("registroenderecoescola")
 else:
   print ("No new records to insert")
+
+# COMMAND ----------
+
+# MAGIC %sql
+# MAGIC select *
+# MAGIC from registroenderecoescola
