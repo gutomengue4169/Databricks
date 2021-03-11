@@ -5,6 +5,7 @@ from pyspark.sql import functions as F
 # COMMAND ----------
 
 # try to mount source data cointainer storage
+# should use secret scope on prod env
 storageAccountName = "datalakestorageescola"
 storageAccountAccessKey = "kZoGlxzygrJ1ZV1TlM0LMmubkWR5WOk6AOnV8FSJ+iNpePhVXSRUo1az6gWxvlIntRK8Yo654zUbikM9jrBmIA=="
 blobContainerName = "datalakesourcedata"
