@@ -29,7 +29,11 @@ left_join = dfs.join(dft, (dfs._id == dft._id) & (dfs.nome==dft.nome) & (dfs.Dat
 
 # COMMAND ----------
 
-left_join.write.jdbc( url=url, table= "registroenderecoescola", mode= "append", properties=properties)
+# insert new records if any
+if left_join.count() > 0:
+  left_join.write.jdbc( url=url, table= "registroenderecoescola", mode= "append", properties=properties)
+else:
+  print ("No new records to insert")
 
 # COMMAND ----------
 
