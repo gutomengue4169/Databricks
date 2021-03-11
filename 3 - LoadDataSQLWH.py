@@ -3,6 +3,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
 # get the conn with SQL server
+# Currently on dev not using Secret Scope, this should be change for prod env.
 jdbchost = "devserverescola.database.windows.net"
 jdbcport = "1433"
 jdbcdatabase = "dev_database_escola"
